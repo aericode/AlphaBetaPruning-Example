@@ -16,7 +16,7 @@ int getRandom(int maxValue){
 
 Node::Node(){}
 
-Node::Node(int currentDepth, int targetDepth, int branchingFactor){
+Node::Node(int currentDepth, int targetDepth, int branchingFactor, bool printValue){
 
 	if(currentDepth == targetDepth){
 		nodeType = LEAF;
@@ -27,7 +27,7 @@ Node::Node(int currentDepth, int targetDepth, int branchingFactor){
 
 	if(nodeType==LEAF){
 		value = getRandom(MAXLEAFVALUE);
-		std::cout<<value<<' ';
+		if(printValue)std::cout<<value<<' ';
 	}else{
 		if(nodeType == MAX){
 			value = INFMIN;
@@ -40,7 +40,7 @@ Node::Node(int currentDepth, int targetDepth, int branchingFactor){
 		childs =  new Node*[branchingFactor];
 
 		for(int i=0;i < branchingFactor;i++){
-			childs[i] = new Node(currentDepth + 1, targetDepth, branchingFactor);
+			childs[i] = new Node(currentDepth + 1, targetDepth, branchingFactor, printValue);
 			childs[i]->parent = this;
 		}
 
@@ -52,7 +52,6 @@ void Node::destroyRecursive()
 {  
 	if(nodeType!=LEAF){
 	    for(int i=0;i< childCount ;i++){
-	    	//std::cout<<"type: "<<nodeType<<std::endl;
 	    	childs[i]->destroyRecursive();
 	    }
 	}

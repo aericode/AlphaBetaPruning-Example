@@ -22,7 +22,7 @@ public:
 	void seekValue();
 
 	Node();
-	Node(int, int, int);
+	Node(int, int, int, bool);
 
 	void destroyRecursive();
 	
