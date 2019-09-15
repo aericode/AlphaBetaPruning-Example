@@ -14,6 +14,8 @@ int main(){
 	Time start;
 	Time end;
 
+	std::cout<<"ALPHA BETA PRUNING APLICADO"<<std::endl<<std::endl;
+
 	std::cout<<"Qual a profundidade da árvore?"<<std::endl;
 	std::cin>>targetDepth;
 

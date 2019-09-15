@@ -4,8 +4,8 @@
 #include <limits>
 //maior valor possível para uma folha
 #define MAXLEAFVALUE 100
-#define INFMAX std::numeric_limits<int>::max()
-#define INFMIN std::numeric_limits<int>::min()
+#define INFMAX  1000//std::numeric_limits<int>::max()
+#define INFMIN -1000//std::numeric_limits<int>::min()
 
 int getRandom(int maxValue){
 	std::random_device dev;
