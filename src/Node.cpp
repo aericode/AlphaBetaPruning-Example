@@ -70,8 +70,6 @@ void Node::seekValue(){
 	}
 
 	if(nodeType==LEAF){
-		//saying value
-		//std::cout<<value<<" "<<std::endl;
 		return;
 	}else if(nodeType==MAX){
 		for(int i=0;i< childCount ;i++){
