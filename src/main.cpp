@@ -13,9 +13,12 @@ int main(){
 	std::cout<<"Qual o fator de ramificação da árvore?"<<std::endl;
 	std::cin>>branchingFactor;
 
+	std::cout<<"Valores das folhas"<<std::endl;
+
 	Node root = Node(0, targetDepth, branchingFactor);
 
 	std::cout<<std::endl;
+	
 	root.seekValue();
 
 	std::cout<<"Melhor valor alcançado: "<<root.value<<std::endl;
