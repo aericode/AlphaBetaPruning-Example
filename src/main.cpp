@@ -22,11 +22,5 @@ int main(){
 
 	root.destroyRecursive();
 
-	std::cout<<"Rota escolhida: ";
-
-	root.choiceRoute();
-
-	std::cout<<std::endl;
-
 	return 0;
 }

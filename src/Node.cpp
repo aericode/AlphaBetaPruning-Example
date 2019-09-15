@@ -1,9 +1,11 @@
 #include <iostream>
 #include <random>
 #include "Node.h"
-
+#include <limits>
 //maior valor possível para uma folha
 #define MAXLEAFVALUE 100
+#define INFMAX std::numeric_limits<int>::max()
+#define INFMIN std::numeric_limits<int>::min()
 
 int getRandom(int maxValue){
 	std::random_device dev;
@@ -15,6 +17,12 @@ int getRandom(int maxValue){
 Node::Node(){}
 
 Node::Node(int currentDepth, int targetDepth, int branchingFactor){
+	if(currentDepth==0){
+		alpha = INFMIN;
+		beta  = INFMAX;
+	}
+
+
 	if(currentDepth == targetDepth){
 		nodeType = LEAF;
 		childCount = 0;
@@ -25,25 +33,30 @@ Node::Node(int currentDepth, int targetDepth, int branchingFactor){
 	if(nodeType==LEAF){
 		value = getRandom(MAXLEAFVALUE);
 	}else{
+		if(nodeType == MAX){
+			value = INFMIN;
+		}else if(nodeType == MIN){
+			value = INFMAX;
+		}
+
 		childCount = branchingFactor;
-		untouched = true;
 
 		childs =  new Node*[branchingFactor];
 
 		for(int i=0;i < branchingFactor;i++){
 			childs[i] = new Node(currentDepth + 1, targetDepth, branchingFactor);
 		}
+
 	}
 }
 
 
 void Node::destroyRecursive()
 {  
-	Node* node = this;
 	if(nodeType!=LEAF){
-	    for(int i=0;i< node->childCount ;i++){
+	    for(int i=0;i< childCount ;i++){
 	    	//std::cout<<"type: "<<nodeType<<std::endl;
-	    	node->childs[i]->destroyRecursive();
+	    	childs[i]->destroyRecursive();
 	    }
 	}
 
@@ -51,43 +64,28 @@ void Node::destroyRecursive()
 }
 
 void Node::seekValue(){
-	Node* node = this;
 
 	if(nodeType==LEAF){
-		
 		//saying value
 		std::cout<<value<<" "<<std::endl;
 		return;
 	}else if(nodeType==MAX){
-		for(int i=0;i< node->childCount ;i++){
-	    	node->childs[i]->seekValue();
+		for(int i=0;i< childCount ;i++){
+	    	childs[i]->seekValue();
 	    }
-	    for(int i=0;i< node->childCount ;i++){
-	    	if(node->childs[i]->value > this->value || untouched){
-	    		this->value = node->childs[i]->value;
-	    		untouched = false;
-	    		node->myChoice = i;
+	    for(int i=0;i < childCount ;i++){
+	    	if(childs[i]->value > value){
+	    		value = childs[i]->value;
 	    	}
 	    }
 	}else if(nodeType==MIN){
-		for(int i=0;i< node->childCount ;i++){
-	    	node->childs[i]->seekValue();
+		for(int i=0;i< childCount ;i++){
+	    	childs[i]->seekValue();
 	    }
-	    for(int i=0;i< node->childCount ;i++){
-	    	if(node->childs[i]->value < this->value || untouched){
-	    		this->value = node->childs[i]->value;
-	    		untouched = false;
-	    		node->myChoice = i;
+	    for(int i=0;i < childCount ;i++){
+	    	if(childs[i]->value < value){
+	    		value = childs[i]->value;
 	    	}
 	    }
-	}
-}
-
-void Node::choiceRoute(){
-	if(nodeType==LEAF){
-		return;
-	}else{
-		std::cout<< myChoice <<' ';
-		childs[myChoice]->choiceRoute();
 	}
 }

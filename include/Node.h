@@ -14,10 +14,10 @@ public:
 	int depth;
 	Type nodeType;
 	Node** childs;
+	Node*  parent;
 
-	bool untouched;
-
-	int myChoice;
+	int alpha;
+	int beta;
 
 	void seekValue();
 
@@ -25,8 +25,6 @@ public:
 	Node(int, int, int);
 
 	void destroyRecursive();
-
-	void choiceRoute();
 	
 };
 
